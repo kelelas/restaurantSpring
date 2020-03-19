@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant</title>
+    <base href="/">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="test.css">
+</head>
+<body>
+<header>
+    <div class="container">
+        <div class="row">
+            <div class="col-4 logo">
+                <div th:text="#{header.restaurant}"></div>
+            </div>
+            <div class="col-4 buttons">
+                <button type="button" class="btn btn-light">UKR</button>
+                <button type="button" class="btn btn-light">ENG</button>
+            </div>
+            <div class="col-4 logout">
+                <div>
+                    <div class="name">Владик, вставь имя</div>
+                    <button type="button" class="btn btn-outline-secondary" th:text="#{button.logout}"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<nav class="menu">
+    <div class="container">
+        <ul>
+            <li><a href="/user/menu">Меню</a></li>
+            <li><a href="/user/bill">Счет</a></li>
+            <li><a href="/user/history">История</a></li>
+            <li><a href="/user/cart">Корзина</a></li>
+            <li><a href="/user/refill">Пополнить счет</a></li>
+        </ul>
+    </div>
+</nav>
+<h1>История заказов</h1>
+<div class="container">
+    <section class="cart">
+
+        <div class="row cart_item">
+            <div class="col-1">1</div>
+            <div class="col-2">
+                <img src="img/food.jpg" alt="">
+            </div>
+            <div class="col-4 info">
+                <div class="title">
+                    Название блюда
+                </div>
+                <div class="ingredients">
+                    Some quick example text to build on the card title and make up the bulk of the card's content.
+                </div>
+            </div>
+            <div class="col-1">
+                <div class="price">₴500</div>
+            </div>
+            <div class="col-1">
+                <div class="sum">2</div>
+            </div>
+            <div class="col-1">
+                <div class="value">₴1000</div>
+            </div>
+            <div class="col-2">
+                <div class="date_time">
+                    <span>13.03.2020 16:30</span>
+                </div>
+            </div>
+        </div>
+        <div class="summary">
+            <div class="title">Общая стоимость:</div>
+            <div class="amount">₴1000</div>
+        </div>
+    </section>
+</div>
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-4" th:text="#{footer.name}">
+
+            </div>
+            <div class="col-4 date">
+                15.03.2020
+            </div>
+            <div class="col-4 version" th:text="#{footer.version}">
+
+            </div>
+        </div>
+    </div>
+</footer>
+</body>
+</html>

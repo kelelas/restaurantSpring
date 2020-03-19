@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet"  href="test.css">
+</head>
+<body>
+<header>
+    <div class="container">
+        <div class="row">
+            <div class="col-4">
+                <div class="logo" th:text="#{header.restaurant}"></div>
+            </div>
+            <div class="col-4">
+                    <button type="submit" class="btn btn-light" onclick="location.href='?locale=ua'" th:text="#{header.ukr}"></button>
+                    <button type="submit" class="btn btn-light" onclick="location.href='?locale=en'" th:text="#{header.eng}"></button>
+            </div>
+        </div>
+    </div>
+</header>
+
+<nav class="menu">
+    <div class="container">
+        <ul>
+            <li><a href="/" th:text="#{page.main}"></a></li>
+            <li><a href="/login" th:text="#{page.login}"></a></li>
+            <li><a href="/registration" th:text="#{page.signup}"></a></li>
+        </ul>
+    </div>
+</nav>
+<section class="login">
+    <form class="form-signin" method="post" action="login">
+        <div th:if="${param.error != null}">
+        <div class="alert alert-danger" role="alert">Invalid credentials</div>
+        </div>
+        <div th:if="${param.logout != null}">
+        <div class="alert alert-info" role="alert">You have been logged out</div>
+        </div>
+        <label for="email" th:text="#{registration.email}"></label>
+        <input type="email" name="email" id="email" placeholder="ivanov@gmail.com">
+        <label for="password" th:text="#{registration.password}"></label>
+        <input type="password" name="password" id="password" placeholder="********">
+        <input type="submit" th:value="#{button.login}">
+    </form>
+</section>
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-4" th:text="#{footer.name}">
+
+            </div>
+            <div class="col-4 date">
+                15.03.2020
+            </div>
+            <div class="col-4 version" th:text="#{footer.version}">
+
+            </div>
+        </div>
+    </div>
+</footer>
+</body>
+</html>
