@@ -22,12 +22,16 @@ public class HistoryItem {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column( nullable = false)
     private Long id;
-    @Column(name = "user_id", nullable = false)
-    private Long user_id;
+    @Column(name = "userid", nullable = false)
+    private Long userid;
     @Column(name = "price", nullable = false)
     private int price;
-    @Column(name = "dishes_list", nullable = false)
-    private String dishes_list;
+    @Column(name = "status", nullable = false)
+    private int status;
+    @Column(name = "dishes_list_ukr", nullable = false)
+    private String dishes_list_ukr;
+    @Column(name = "dishes_list_eng", nullable = false)
+    private String dishes_list_eng;
     @Column(name = "date", nullable = false)
     private LocalDateTime date;
 }

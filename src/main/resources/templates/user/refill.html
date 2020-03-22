@@ -5,9 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Restaurant</title>
-    <base href="/">
+
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" href="test.css">
+    <link rel="stylesheet" href="/test.css">
 </head>
 <body>
 <header>
@@ -17,13 +17,14 @@
                 <div th:text="#{header.restaurant}"></div>
             </div>
             <div class="col-4 buttons">
-                <button type="button" class="btn btn-light">UKR</button>
-                <button type="button" class="btn btn-light">ENG</button>
+                <button type="submit" class="btn btn-light" onclick="location.href='?locale=ua'" th:text="#{header.ukr}"></button>
+                <button type="submit" class="btn btn-light" onclick="location.href='?locale=en'" th:text="#{header.eng}"></button>
             </div>
             <div class="col-4 logout">
                 <div>
-                    <div class="name">Владик, вставь имя</div>
-                    <button type="button" class="btn btn-outline-secondary" th:text="#{button.logout}"></button>
+                    <div class="name" th:text="${name}"></div>
+<!--                    <div class="name">1000</div>-->
+                    <button type="button" class="btn btn-outline-secondary" onclick="location.href='/logout'" th:text="#{button.logout}"></button>
                 </div>
             </div>
         </div>
@@ -32,21 +33,20 @@
 <nav class="menu">
     <div class="container">
         <ul>
-            <li><a href="/user/menu">Меню</a></li>
-            <li><a href="/user/bill">Счет</a></li>
-            <li><a href="/user/history">История</a></li>
-            <li><a href="/user/cart">Корзина</a></li>
-            <li><a href="/user/refill">Пополнить счет</a></li>
+            <li><a href="/user/menu" th:text="#{page.menu}"></a></li>
+            <li><a href="/user/bill" th:text="#{page.bill}"></a></li>
+            <li><a href="/user/history" th:text="#{page.history}"></a></li>
+            <li><a href="/user/cart" th:text="#{page.cart}"></a></li>
+            <li><a href="/user/refill" th:text="#{page.refill}"></a></li>
         </ul>
     </div>
 </nav>
-<div th:if="${param.refiled != null}">
-    <div class="alert alert-info" role="alert">You has refiled your balance for 1000₴</div>
+<div th:if="${param.ok != null}">
+    <div class="alert alert-info" role="alert" th:text="#{alert.refill}"></div>
 </div>
 <section class="refill">
-    <form action="/refill" method="post">
-    <button type="submit" class="btn btn-success">Пополнить баланс</button>
-    </form>
+    <button type="submit" class="btn btn-success" onclick="location.href='?ok=true'" th:text="#{button.refill}"></button>
+
 </section>
 <footer>
     <div class="container">

@@ -1,6 +1,7 @@
 package com.kelelas.restaurant.service;
 
 import com.kelelas.restaurant.dto.UsersDTO;
+import com.kelelas.restaurant.entity.User;
 import com.kelelas.restaurant.repository.UserRepository;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
@@ -27,5 +28,15 @@ public class UserService implements UserDetailsService {
     }
     public UsersDTO getAllUsers() {
         return new UsersDTO(userRepository.findAll());
+    }
+    public void save(User user){
+        try {
+            userRepository.save(user);
+        }catch (Exception e){
+            System.out.println(user);
+        }
+
+
+
     }
 }

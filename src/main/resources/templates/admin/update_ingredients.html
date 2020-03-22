@@ -5,25 +5,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Restaurant</title>
-    <base href="/">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" href="test.css">
+    <link rel="stylesheet" href="/test.css">
 </head>
 <body>
 <header>
     <div class="container">
         <div class="row">
             <div class="col-4 logo">
-                <div>Ресторан</div>
+                <div th:text="#{header.restaurant}"></div>
             </div>
             <div class="col-4 buttons">
-                <button type="button" class="btn btn-light">UKR</button>
-                <button type="button" class="btn btn-light">ENG</button>
+                <button type="submit" class="btn btn-light" onclick="location.href='?locale=ua'" th:text="#{header.ukr}"></button>
+                <button type="submit" class="btn btn-light" onclick="location.href='?locale=en'" th:text="#{header.eng}"></button>
             </div>
             <div class="col-4 logout">
                 <div>
-                    <div class="name">Владик, вставь имя</div>
-                    <button type="button" class="btn btn-outline-secondary">Выйти</button>
+                    <div class="name" th:text="${name}"></div>
+                    <button type="button" class="btn btn-outline-secondary" onclick="location.href='/logout'" th:text="#{button.logout}"></button>
                 </div>
             </div>
         </div>
@@ -32,30 +31,42 @@
 <nav class="menu">
     <div class="container">
         <ul>
-            <li><a href="/admin/orders_list">Список заказов</a></li>
-            <li><a href="/admin/bill_confirm">Отправить счет</a></li>
-            <li><a href="/admin/statistics">Статистика</a></li>
-            <li><a href="/admin/update_ingredients">Обновить ингредиенты</a></li>
+            <li><a href="/admin/orders_list" th:text="#{page.listOfOrders}"></a></li>
+            <!--            <li><a href="/admin/bill_confirm">Отправить счет</a></li>-->
+            <li><a href="/admin/statistics" th:text="#{page.statistics}"></a></li>
+            <li><a href="/admin/update_ingredients" th:text="#{page.updateIngredients}"></a></li>
         </ul>
     </div>
 </nav>
-<h1>Запасы</h1>
+<h1 th:text="#{text.ingredients}"></h1>
 <div class="container">
     <section class="cart">
         <div class="row cart_item">
             <div class="col-3">
-                <div>Куриная грудка</div>
+                <div th:text="#{field.name}"></div>
             </div>
             <div class="col-3">
-                <div>20 кг</div>
+                <div th:text="#{field.amount}"></div>
             </div>
             <div class="col-3">
-                <div>
-                    100 кг
-                </div>
+                <div th:text="#{field.maxAmount}"></div>
             </div>
             <div class="col-3">
-                <button type="button" class="btn btn-warning">Пополнить</button>
+
+            </div>
+        </div>
+        <div class="row cart_item" th:each="item : ${items}">
+            <div class="col-3">
+                <div th:text="${item.getName()}"></div>
+            </div>
+            <div class="col-3">
+                <div th:text="${item.getAmount()}"></div>
+            </div>
+            <div class="col-3">
+                <div th:text="${item.getMax_amount()}"></div>
+            </div>
+            <div class="col-3">
+                <a type="button" class="btn btn-danger" th:href="@{'?id=' + ${item.getId()}}" th:text="#{page.refill}"></a>
             </div>
         </div>
     </section>
@@ -63,14 +74,14 @@
 <footer>
     <div class="container">
         <div class="row">
-            <div class="col-4">
-                Osypchuk Vladislav
+            <div class="col-4" th:text="#{footer.name}">
+
             </div>
             <div class="col-4 date">
                 15.03.2020
             </div>
-            <div class="col-4 version">
-                Version 1
+            <div class="col-4 version" th:text="#{footer.version}">
+
             </div>
         </div>
     </div>

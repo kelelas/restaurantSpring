@@ -5,25 +5,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Restaurant</title>
-    <base href="/">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" href="test.css">
+    <link rel="stylesheet" href="/test.css">
 </head>
 <body>
 <header>
     <div class="container">
         <div class="row">
             <div class="col-4 logo">
-                <div>Ресторан</div>
+                <div th:text="#{header.restaurant}"></div>
             </div>
             <div class="col-4 buttons">
-                <button type="button" class="btn btn-light">UKR</button>
-                <button type="button" class="btn btn-light">ENG</button>
+                <button type="submit" class="btn btn-light" onclick="location.href='?locale=ua'" th:text="#{header.ukr}"></button>
+                <button type="submit" class="btn btn-light" onclick="location.href='?locale=en'" th:text="#{header.eng}"></button>
             </div>
             <div class="col-4 logout">
                 <div>
-                    <div class="name">Владик, вставь имя</div>
-                    <button type="button" class="btn btn-outline-secondary">Выйти</button>
+                    <div class="name" th:text="${name}"></div>
+                    <button type="button" class="btn btn-outline-secondary" onclick="location.href='/logout'" th:text="#{button.logout}"></button>
                 </div>
             </div>
         </div>
@@ -32,65 +31,77 @@
 <nav class="menu">
     <div class="container">
         <ul>
-            <li><a href="/admin/orders_list">Список заказов</a></li>
-            <li><a href="/admin/bill_confirm">Отправить счет</a></li>
-            <li><a href="/admin/statistics">Статистика</a></li>
-            <li><a href="/admin/update_ingredients">Обновить ингредиенты</a></li>
+            <li><a href="/admin/orders_list" th:text="#{page.listOfOrders}"></a></li>
+            <!--            <li><a href="/admin/bill_confirm">Отправить счет</a></li>-->
+            <li><a href="/admin/statistics" th:text="#{page.statistics}"></a></li>
+            <li><a href="/admin/update_ingredients" th:text="#{page.updateIngredients}"></a></li>
         </ul>
     </div>
 </nav>
-<h1>История заказов</h1>
+<h1 th:text="#{text.history}"></h1>
+<form method="post" action="/admin/filter">
+    <input type="text" name="filter" id="filter" th:value="${filterValue}">
+    <input type="submit" value="FilterByUserId">
+</form>
 <div class="container">
     <section class="cart">
-        <div class="filter">
-            <input type="text" name="filter" id="">
-            <input type="button" value="Фильтр">
-        </div>
-        <div class="row cart_item">
-            <div class="col-1">1</div>
+        <div class="row cart_item" >
+            <div class="col-1" th:text="#{field.id}"></div>
+            <div class="col-1" th:text="#{field.userId}"></div>
+            <div class="col-4">
+                <div class="customer" th:text="#{field.order}"></div>
+            </div>
+            <div class="col-1 info">
+                <div class="title" th:text="#{field.sum}">
+                </div>
+            </div>
             <div class="col-2">
-                <img src="img/food.jpg" alt="">
-            </div>
-            <div class="col-4 info">
-                <div class="title">
-                    Название блюда
-                </div>
-                <div class="ingredients">
-                    Some quick example text to build on the card title and make up the bulk of the card's content.
-                </div>
-            </div>
-            <div class="col-1">
-                <div class="price">₴500</div>
-            </div>
-            <div class="col-1">
-                <div class="sum">2</div>
-            </div>
-            <div class="col-1">
-                <div class="value">₴1000</div>
+                <div class="status" th:text="#{field.status}"></div>
             </div>
             <div class="col-2">
                 <div class="date_time">
-                    <span>13.03.2020 16:30</span>
+                    <span th:text="#{field.date}"></span>
                 </div>
             </div>
         </div>
-        <div class="summary">
-            <div class="title">Общая стоимость:</div>
-            <div class="amount">₴1000</div>
+
+    </section>
+</div>
+<div class="container">
+    <section class="cart">
+        <div class="row cart_item" th:each="item : ${items}">
+            <div class="col-1" th:text="${item.getId()}"></div>
+            <div class="col-1" th:text="${item.getUserId()}"></div>
+            <div class="col-4">
+                <div class="customer" th:text="${item.getDishes()}"></div>
+            </div>
+            <div class="col-1 info">
+                <div class="title" th:text="${item.getPrice()}">
+                </div>
+            </div>
+            <div class="col-2">
+                <div class="status" th:text="#{status.ready}"></div>
+            </div>
+            <div class="col-2">
+                <div class="date_time">
+                    <span th:text="${item.getDate()}"></span>
+                </div>
+            </div>
         </div>
+
     </section>
 </div>
 <footer>
     <div class="container">
         <div class="row">
-            <div class="col-4">
-                Osypchuk Vladislav
+            <div class="col-4" th:text="#{footer.name}">
+
             </div>
             <div class="col-4 date">
                 15.03.2020
             </div>
-            <div class="col-4 version">
-                Version 1
+            <div class="col-4 version" th:text="#{footer.version}">
+
             </div>
         </div>
     </div>

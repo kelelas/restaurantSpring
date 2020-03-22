@@ -17,13 +17,9 @@
                 <div class="logo" th:text="#{header.restaurant}"></div>
             </div>
             <div class="col-4">
-                <form th:action="@{'?locale=ua'}">
-                    <button type="button" class="btn btn-light" th:text="#{header.ukr}"></button>
-                </form>
-                <a th:href="@{'?locale=ua'}" th:text="#{header.ukr}"></a>
-                <a th:href="@{'?locale=en'}" th:text="#{header.eng}"></a>
-<!--                <button type="button" class="btn btn-light" th:href="@{'?locale=en'}" th:text="#{header.eng}"></button>-->
-            </div>
+                <button type="submit" class="btn btn-light" onclick="location.href='?locale=ua'" th:text="#{header.ukr}"></button>
+                <button type="submit" class="btn btn-light" onclick="location.href='?locale=en'" th:text="#{header.eng}"></button>
+             </div>
         </div>
     </div>
 </header>

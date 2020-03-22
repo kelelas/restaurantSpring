@@ -5,9 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Restaurant</title>
-    <base href="/">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" href="test.css">
+    <link rel="stylesheet" href="/test.css">
 </head>
 <body>
 <header>
@@ -17,13 +16,13 @@
                 <div th:text="#{header.restaurant}"></div>
             </div>
             <div class="col-4 buttons">
-                <button type="button" class="btn btn-light">UKR</button>
-                <button type="button" class="btn btn-light">ENG</button>
+                <button type="submit" class="btn btn-light" onclick="location.href='?locale=ua'" th:text="#{header.ukr}"></button>
+                <button type="submit" class="btn btn-light" onclick="location.href='?locale=en'" th:text="#{header.eng}"></button>
             </div>
             <div class="col-4 logout">
                 <div>
-                    <div class="name">Владик, вставь имя</div>
-                    <button type="button" class="btn btn-outline-secondary" th:text="#{button.logout}"></button>
+                    <div class="name" th:text="${name}"></div>
+                    <button type="button" class="btn btn-outline-secondary" onclick="location.href='/logout'" th:text="#{button.logout}"></button>
                 </div>
             </div>
         </div>
@@ -32,32 +31,51 @@
 <nav class="menu">
     <div class="container">
         <ul>
-            <li><a href="/user/menu">Меню</a></li>
-            <li><a href="/user/bill">Счет</a></li>
-            <li><a href="/user/history">История</a></li>
-            <li><a href="/user/cart">Корзина</a></li>
-            <li><a href="/user/refill">Пополнить счет</a></li>
+            <li><a href="/user/menu" th:text="#{page.menu}"></a></li>
+            <li><a href="/user/bill" th:text="#{page.bill}"></a></li>
+            <li><a href="/user/history" th:text="#{page.history}"></a></li>
+            <li><a href="/user/cart" th:text="#{page.cart}"></a></li>
+            <li><a href="/user/refill" th:text="#{page.refill}"></a></li>
         </ul>
     </div>
 </nav>
-<h1>Заказы, которые ожидают оплаты</h1>
+<h1 th:text="#{text.ordersWitchWaitingForPayed}"></h1>
 <div class="container">
     <section class="cart">
         <div class="row cart_item">
-            <div class="col-1">1</div>
+            <div class="col-1" th:text="#{field.id}"></div>
             <div class="col-4">
-                <div class="customer">Іван Іванов</div>
+                <div class="customer" th:text="#{field.order}"></div>
             </div>
             <div class="col-2 info">
-                <div class="title">
-                    1000 грн
+                <div class="title" th:text="#{field.sum}">
                 </div>
             </div>
             <div class="col-3">
-                <div class="status">Ожидает оплаты</div>
+                <div class="status"th:text="#{field.status}"></div>
             </div>
             <div class="col-2">
-                <button type="button" class="btn btn-danger">Отправить счет</button>
+
+            </div>
+        </div>
+    </section>
+</div>
+<div class="container">
+    <section class="cart">
+        <div class="row cart_item" th:each="item : ${items}">
+            <div class="col-1" th:text="${item.getId()}">1</div>
+            <div class="col-4">
+                <div class="customer" th:text="${item.getDishes()}"></div>
+            </div>
+            <div class="col-2 info">
+                <div class="title" th:text="${item.getPrice()}">
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="status" th:text="#{status.waitingForPay}"></div>
+            </div>
+            <div class="col-2">
+                <a type="button" class="btn btn-danger" th:href="@{'?id=' + ${item.getId()}}" th:text="#{text.pay}"></a>
             </div>
         </div>
     </section>

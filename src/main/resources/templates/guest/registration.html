@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Restaurant</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" href="../../static/test.css">
+    <link rel="stylesheet" href="test.css">
 </head>
 <body>
 <header>
@@ -16,12 +16,8 @@
                 <div class="logo" th:text="#{header.restaurant}"></div>
             </div>
             <div class="col-4">
-                <form th:action="@{'?locale=ua'}">
-                    <button type="button" class="btn btn-light" th:text="#{header.ukr}"></button>
-                </form>
-                <a th:href="@{'?locale=ua'}" th:text="#{header.ukr}"></a>
-                <a th:href="@{'?locale=en'}" th:text="#{header.eng}"></a>
-                <!--                <button type="button" class="btn btn-light" th:href="@{'?locale=en'}" th:text="#{header.eng}"></button>-->
+                <button type="submit" class="btn btn-light" onclick="location.href='?locale=ua'" th:text="#{header.ukr}"></button>
+                <button type="submit" class="btn btn-light" onclick="location.href='?locale=en'" th:text="#{header.eng}"></button>
             </div>
         </div>
     </div>
@@ -37,7 +33,18 @@
 </nav>
 <div th:if="${param.error != null}">
     <div class="alert alert-danger" role="alert" th:text="#{message.user_exist}"></div>
-    <h3 th:text="#{message.user_exist}"></h3>
+</div>
+<div th:if="${param.regex != null}">
+    <div class="alert alert-danger" role="alert" th:text="#{text.regex1}">
+    </div>
+    <div class="alert alert-danger" role="alert" th:text="#{text.regex2}">
+    </div>
+    <div class="alert alert-danger" role="alert" th:text="#{text.regex3}">
+    </div>
+    <div class="alert alert-danger" role="alert" th:text="#{text.regex4}">
+    </div>
+    <div class="alert alert-danger" role="alert" th:text="#{text.regex5}">
+    </div>
 </div>
 <section class="login">
     <form th:action="@{/registration}" method="post">

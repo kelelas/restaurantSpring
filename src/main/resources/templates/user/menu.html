@@ -17,13 +17,13 @@
                 <div th:text="#{header.restaurant}"></div>
             </div>
             <div class="col-4 buttons">
-                <button type="button" class="btn btn-light">UKR</button>
-                <button type="button" class="btn btn-light">ENG</button>
+                <button type="submit" class="btn btn-light" onclick="location.href='?locale=ua'" th:text="#{header.ukr}"></button>
+                <button type="submit" class="btn btn-light" onclick="location.href='?locale=en'" th:text="#{header.eng}"></button>
             </div>
             <div class="col-4 logout">
                 <div>
                     <div class="name" th:text="${name}"></div>
-                    <button type="button" class="btn btn-outline-secondary" th:text="#{button.logout}"></button>
+                    <button type="button" class="btn btn-outline-secondary" onclick="location.href='/logout'" th:text="#{button.logout}"></button>
                 </div>
             </div>
         </div>
@@ -32,11 +32,11 @@
 <nav class="menu">
     <div class="container">
         <ul>
-            <li><a href="/user/menu">Меню</a></li>
-            <li><a href="/user/bill">Счет</a></li>
-            <li><a href="/user/history">История</a></li>
-            <li><a href="/user/cart">Корзина</a></li>
-            <li><a href="/user/refill">Пополнить счет</a></li>
+            <li><a href="/user/menu" th:text="#{page.menu}"></a></li>
+            <li><a href="/user/bill" th:text="#{page.bill}"></a></li>
+            <li><a href="/user/history" th:text="#{page.history}"></a></li>
+            <li><a href="/user/cart" th:text="#{page.cart}"></a></li>
+            <li><a href="/user/refill" th:text="#{page.refill}"></a></li>
         </ul>
     </div>
 </nav>
@@ -46,15 +46,13 @@
 
             <div class="col-4" th:each="dish : ${dishes}">
                 <div class="card" style="width: 18rem;">
-
-
-
-                            <img th:src="${dish.image}" class="card-img-top" alt="">
+                            <img th:src="${dish.getImage()}" class="card-img-top" alt="">
                         <div class="card-body">
-                            <h5 class="card-title" th:text="${dish.name_eng}"></h5>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                            <span class="price" th:text="${dish.price}"></span>
-                            <a th:href="@{'?id=' + ${dish.id}}" class="btn btn-primary">В корзину</a>
+                            <h5 class="card-title" th:text="${dish.getName()}"></h5>
+<!--                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>-->
+                            <p class="card-text" th:text="#{text.mainIngredient} + ' ' + ${dish.getMain_ingredient()} + ' ' + #{text.offIngredient} + ' ' + ${dish.getOff_ingredient()}"></p>
+                            <span class="price" th:text="${dish.getPrice()}"></span>
+                            <a th:href="@{'?id=' + ${dish.getId()}}" class="btn btn-primary" th:text="#{button.basket}"></a>
                         </div>
 
                     </div>

@@ -64,7 +64,7 @@ nav ul a:hover{
 .title_with_img{
     height: 50vh;
     width: 100%;
-    background-image: url('../public/img/restaurant.jpg');
+    background-image: url('/img/restaurant.jpg');
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
