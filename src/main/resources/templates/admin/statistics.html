@@ -71,7 +71,7 @@
     <section class="cart">
         <div class="row cart_item" th:each="item : ${items}">
             <div class="col-1" th:text="${item.getId()}"></div>
-            <div class="col-1" th:text="${item.getUserId()}"></div>
+            <div class="col-1" th:text="${item.getUserid()}"></div>
             <div class="col-4">
                 <div class="customer" th:text="${item.getDishes()}"></div>
             </div>
@@ -80,7 +80,7 @@
                 </div>
             </div>
             <div class="col-2">
-                <div class="status" th:text="#{status.ready}"></div>
+                <div class="status" th:text="${item.getStatus()}"></div>
             </div>
             <div class="col-2">
                 <div class="date_time">

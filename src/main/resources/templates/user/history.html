@@ -57,6 +57,9 @@
             <div class="col-2">
                 <span th:text="#{field.date}"></span>
             </div>
+            <div class="col-1 info">
+                <div class="title" th:text="#{field.status}">
+                </div>
         </div>
     </section>
 </div>
@@ -79,6 +82,11 @@
             <div class="col-2">
                 <div class="date_time">
                     <span th:text="${item.getDate()}"></span>
+                </div>
+            </div>
+            <div class="col-1">
+                <div class="date_time">
+                    <span th:text="${item.getStatus()}"></span>
                 </div>
             </div>
         </div>

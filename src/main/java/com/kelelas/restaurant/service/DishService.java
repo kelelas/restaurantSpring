@@ -1,21 +1,21 @@
 package com.kelelas.restaurant.service;
 
+import com.kelelas.restaurant.dto.DishDTO;
 import com.kelelas.restaurant.entity.Dish;
 import com.kelelas.restaurant.repository.DishRepository;
-import lombok.Builder;
-import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.support.RequestContextUtils;
 
-import java.util.ArrayList;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 
 @Slf4j
 @Service
-//@Data
-//@Builder
+
 public class DishService {
     DishRepository dishRepository;
     @Autowired
@@ -23,11 +23,21 @@ public class DishService {
         this.dishRepository = dishRepository;
     }
 
-    public ArrayList<Dish> getAllDishes() {
-        return new ArrayList<>(dishRepository.findAll());
-    }
+
     public Optional<Dish> getDishById(Long id){
         return dishRepository.findById(id);
     }
 
+    public List<DishDTO> getLocaleDishes(HttpServletRequest request){
+        if (RequestContextUtils.getLocale(request).equals(new Locale("ua")))
+            return dishRepository.findUkrDishes();
+        else
+            return dishRepository.findEngDishes();
+    }
+    public  DishDTO getOneLocaleDish(HttpServletRequest request, Long id){
+        if (RequestContextUtils.getLocale(request).equals(new Locale("ua")))
+            return dishRepository.findUkrDishById(id);
+        else
+            return dishRepository.findEngDishById(id);
+    }
 }

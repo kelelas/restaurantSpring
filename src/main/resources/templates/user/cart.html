@@ -17,8 +17,9 @@
                 <div th:text="#{header.restaurant}"></div>
             </div>
             <div class="col-4 buttons">
-                <button type="submit" class="btn btn-light" onclick="location.href='?locale=ua'" th:text="#{header.ukr}"></button>
-                <button type="submit" class="btn btn-light" onclick="location.href='?locale=en'" th:text="#{header.eng}"></button>
+
+                <button type="submit" class="btn btn-light" onclick="location.href='?locale=ua'"  th:text="#{header.ukr}"></button>
+                <button type="submit" class="btn btn-light" onclick="location.href='?locale=en'"  th:text="#{header.eng}"></button>
             </div>
             <div class="col-4 logout">
                 <div>
@@ -69,20 +70,19 @@
     <section class="cart">
 
         <div class="row cart_item" th:each="dish : ${order}">
-            <div class="col-1" th:text="${dish.get().id}"></div>
+            <div class="col-1" th:text="${dish.getId()}"></div>
             <div class="col-3">
-                <img th:src="${dish.get().image}" alt="">
+                <img th:src="${dish.getImage()}" alt="">
             </div>
             <div class="col-4 info">
-                <div class="title"  th:text="${dish.get().name_eng}">
+                <div class="title"  th:text="${dish.getName()}">
 
                 </div>
-                <div class="ingredients">
-                    Some quick example text to build on the card title and make up the bulk of the card's content.
+                <div class="ingredients" th:text="#{text.mainIngredient} + ' ' + ${dish.getMain_ingredient()} + ' ' + #{text.offIngredient} + ' ' + ${dish.getOff_ingredient()}">
                 </div>
             </div>
             <div class="col-1">
-                <div class="price"  th:text="${dish.get().price}"></div>
+                <div class="price"  th:text="${dish.getPrice()}"></div>
             </div>
 <!--            <div class="col-1">-->
 <!--                <div class="sum">2</div>-->
@@ -91,7 +91,7 @@
 <!--                <div class="value">₴1000</div>-->
 <!--            </div>-->
             <div class="col-1">
-                <a th:href="@{'?id=' + ${dish.get().id}}">
+                <a th:href="@{'?id=' + ${dish.getId()}}">
                 <div class="cross">
                     <span></span>
                     <span></span>
