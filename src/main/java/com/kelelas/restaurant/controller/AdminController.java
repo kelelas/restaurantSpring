@@ -1,11 +1,14 @@
 package com.kelelas.restaurant.controller;
 
+import com.kelelas.restaurant.dto.DishDTO;
+import com.kelelas.restaurant.entity.Dish;
 import com.kelelas.restaurant.entity.HistoryItem;
 import com.kelelas.restaurant.entity.Ingredient;
 import com.kelelas.restaurant.entity.User;
 import com.kelelas.restaurant.service.DishService;
 import com.kelelas.restaurant.service.IngredientService;
 import com.kelelas.restaurant.service.StoriesService;
+import com.kelelas.restaurant.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -16,6 +19,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 @Controller
@@ -24,15 +29,16 @@ import java.util.Locale;
 public class AdminController {
     StoriesService storiesService;
     DishService dishService;
+    UserService userService;
     IngredientService ingredientService;
 
     public AdminController() {
     }
     @Autowired
-    public AdminController(StoriesService storiesService, DishService dishService, IngredientService ingredientService) {
+    public AdminController(StoriesService storiesService, DishService dishService, IngredientService ingredientService, UserService userService) {
         this.storiesService = storiesService;
         this.dishService = dishService;
-
+        this.userService = userService;
         this.ingredientService = ingredientService;
     }
 
@@ -46,6 +52,7 @@ public class AdminController {
         if (id!=null) {
             historyItem = storiesService.getStoryById(Long.parseLong(id)).get();
             if (historyItem.getStatus() == 1) {
+                confirm(historyItem.getDishes_list_eng());
                 historyItem.setStatus(2);
                 storiesService.save(historyItem);
                 model.addAttribute("items", storiesService.getLocaleStoriesByStatus(request, 1));
@@ -102,6 +109,23 @@ public class AdminController {
             return user.getName_ukr();
         else
             return user.getName_eng();
+
+    }
+
+    public void confirm(String dishes){
+        ArrayList<Dish> dishes1 = new ArrayList<>();
+        String[] dishesName = dishes.split(", ");
+        ArrayList<Ingredient> ingredientList = new ArrayList<>();
+        for(String dishName : dishesName){
+            dishes1.add(dishService.getDishByName(dishName));
+        }
+        for (Dish dish : dishes1){
+            ingredientList.add(ingredientService.getIngredientById(dish.getMain_ingredient_id()));
+            ingredientList.add(ingredientService.getIngredientById(dish.getOff_ingredient_id()));
+        }
+        for (Ingredient ingredient: ingredientList){
+            ingredient.setAmount(ingredient.getAmount()-1);
+        }
 
     }
 }

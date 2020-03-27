@@ -27,7 +27,9 @@ public class DishService {
     public Optional<Dish> getDishById(Long id){
         return dishRepository.findById(id);
     }
-
+    public Dish getDishByName( String name){
+        return dishRepository.findOneDishByName(name);
+    }
     public List<DishDTO> getLocaleDishes(HttpServletRequest request){
         if (RequestContextUtils.getLocale(request).equals(new Locale("ua")))
             return dishRepository.findUkrDishes();

@@ -70,6 +70,7 @@ public class UserController {
             historyItem = storiesService.getStoryById(Long.parseLong(id)).get();
             // historyItem = storiesService.getStoryById(Long.parseLong(id)).isPresent() ? storiesService.getStoryById(Long.parseLong(id)).get() : log.info("{Почтовый адрес уже существует}");;
             if (historyItem.getStatus() == 2) {
+                pay(historyItem.getPrice());
                 historyItem.setStatus(3);
                 storiesService.save(historyItem);
                 model.addAttribute("items", storiesService.getLocaleStoriesByStatusAndUserId(request, 2, user().getId()));
@@ -106,7 +107,6 @@ public class UserController {
         }
         if (ok!=null && !dishesId.isEmpty() ) {
             if (user().getBalance()>=sum ) {
-                saveToStory();
                 confirm(request);
                 model.addAttribute("order", dishes(request));
                 model.addAttribute("sum", sum);
@@ -128,11 +128,7 @@ public class UserController {
         return "/user/refill.html";
     }
 
-    public User user() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User user = (User) authentication.getPrincipal();
-        return user;
-    }
+
 
     public void addDishToOrder( Long id){
         if (!dishesId.contains(id))
@@ -144,27 +140,6 @@ public class UserController {
             dishesId.remove(id);
         sum();
     }
-    public void sum(){
-        sum=0;
-        for (Long id : dishesId){
-            sum += dishService.getDishById(id).get().getPrice();
-        }
-    }
-    public void confirm(HttpServletRequest request){
-        User user = user();
-        for (DishDTO dish: dishes(request)) {
-            ingredientList.add(ingredientService.getIngredientById(dish.getMain_ingredient_id()));
-            ingredientList.add(ingredientService.getIngredientById(dish.getOff_ingredient_id()));
-        }
-        for (Ingredient ingredient: ingredientList){
-            ingredient.setAmount(ingredient.getAmount()-1);
-        }
-        user.setBalance(user.getBalance() - sum);
-        userService.save(user);
-        dishesId.clear();
-        ingredientList.clear();
-        sum=0;
-    }
     public List<DishDTO> dishes(HttpServletRequest request){
         ArrayList<DishDTO> dishes = new ArrayList<>();
         for (Long id : dishesId){
@@ -172,6 +147,30 @@ public class UserController {
         }
         return dishes;
     }
+
+    public void sum(){
+        sum=0;
+        for (Long id : dishesId){
+            sum += dishService.getDishById(id).get().getPrice();
+        }
+    }
+    public User user() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = (User) authentication.getPrincipal();
+        return user;
+    }
+    public void confirm(HttpServletRequest request){
+        saveToStory();
+        dishesId.clear();
+        ingredientList.clear();
+        sum=0;
+    }
+    public void pay(int sum){
+        User user = user();
+        user.setBalance(user.getBalance() - sum);
+        userService.save(user);
+    }
+
     public void saveToStory(){
         StringBuilder listOfUkrNames = new StringBuilder();
         StringBuilder listOfEngNames = new StringBuilder();

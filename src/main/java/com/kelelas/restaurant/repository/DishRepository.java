@@ -18,4 +18,6 @@ public interface DishRepository extends JpaRepository<Dish, Long> {
     DishDTO findEngDishById(Long id);
     @Query(value = com.kelelas.restaurant.config.Query.SELECT_ONE_UKR_DISH)
     DishDTO findUkrDishById(Long id);
+    @Query(value = com.kelelas.restaurant.config.Query.FIND_DISH_BY_NAME)
+    Dish findOneDishByName(String name);
 }
