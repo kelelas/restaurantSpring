@@ -11,6 +11,6 @@ import lombok.*;
 public class IngredientDTO {
     private Long id;
     private int amount;
-    private int max_amount;
+    private int maxAmount;
     private String name;
 }

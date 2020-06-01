@@ -23,8 +23,9 @@
             </div>
             <div class="col-4 logout">
                 <div>
-                    <<div class="name" th:text="${name}"></div>
+                    <div class="name" th:text="${user.getNameEng()}"></div>
                     <button type="button" class="btn btn-outline-secondary" onclick="location.href='/logout'" th:text="#{button.logout}"></button>
+                    <div class="name" th:text="#{header.balance} +' '+ ${user.getBalance()} + #{header.currency}"></div>
                 </div>
             </div>
         </div>
@@ -42,14 +43,13 @@
     </div>
 </nav>
 <h1 th:text="#{page.cart}"></h1>
-<div th:if="${param.ok != null}">
+<div th:if="${param.success != null}">
     <div class="alert alert-info" role="alert" th:text="#{alert.cart}"></div>
 </div>
 <div class="container">
     <section class="cart">
         <div class="row cart_item">
 
-    <div class="col-1" th:text="#{field.id}"></div>
     <div class="col-3">
         <div class="title"  th:text="#{field.img}">
         </div>
@@ -70,53 +70,58 @@
     <section class="cart">
 
         <div class="row cart_item" th:each="dish : ${order}">
-            <div class="col-1" th:text="${dish.getId()}"></div>
             <div class="col-3">
                 <img th:src="${dish.getImage()}" alt="">
             </div>
             <div class="col-4 info">
                 <div class="title"  th:text="${dish.getName()}">
-
                 </div>
-                <div class="ingredients" th:text="#{text.mainIngredient} + ' ' + ${dish.getMain_ingredient()} + ' ' + #{text.offIngredient} + ' ' + ${dish.getOff_ingredient()}">
-                </div>
+                    <div th:each="ingredient : ${dish.getIngredients()}">
+                        <p class="card-text" th:text="${ingredient.getName()}"></p>
+                    </div>
             </div>
-            <div class="col-1">
+            <div class="col-4">
                 <div class="price"  th:text="${dish.getPrice()}"></div>
             </div>
-<!--            <div class="col-1">-->
-<!--                <div class="sum">2</div>-->
-<!--            </div>-->
-<!--            <div class="col-1">-->
-<!--                <div class="value">₴1000</div>-->
-<!--            </div>-->
             <div class="col-1">
-                <a th:href="@{'?id=' + ${dish.getId()}}">
-                <div class="cross">
-                    <span></span>
-                    <span></span>
-                </div>
-                </a>
+                <form th:action="'/user/deleteFromOrder'+${dish.getId()}" method="post" >
+                    <input type="submit" class="btn btn-primary red-btn" th:value="#{button.delete}">
+                </form>
             </div>
         </div>
         <div class="summary">
             <div class="title" th:text="#{text.summary}"></div>
             <div class="amount" th:text="${sum}"></div>
         </div>
-        <button type="button" class="btn btn-outline-success"  onclick="location.href='?ok=true'" th:text="#{button.ok}"></button>
+        <th:block  th:if="${sum > 0}">
+            <form th:action="@{/user/confirm}" method="post" >
+                <input type="submit" class="btn btn-primary green-btn" th:value="#{button.ok}">
+            </form>
+        </th:block>
+
     </section>
 </div>
 <footer>
     <div class="container">
-        <div class="row">
-            <div class="col-4" th:text="#{footer.name}">
-
+        <div class="row footer_info">
+            <div class="col-4 footer-col logo" th:text="#{header.restaurant}">
             </div>
-            <div class="col-4 date">
-                15.03.2020
+            <div class="col-4 footer-col contacts">
+                <div class="title" th:text="#{footer.contacts}"></div>
+                <a href="tel:+380935947785" class="phone">+38 093 594 77 85</a>
+                <a href="mailto:kelels2015@gmail.com" class="email">kelels2015@gmail.com</a>
+                <a href="https://github.com/kelelas">github.com/kelelas</a>
             </div>
-            <div class="col-4 version" th:text="#{footer.version}">
-
+            <div class="col-4 footer-col">
+                <div class="title" th:text="#{footer.version}">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row copyright">
+            <div class="col-12">
+                Made by Osypchuk Vladyslav
             </div>
         </div>
     </div>

@@ -32,7 +32,6 @@
     <div class="container">
         <ul>
             <li><a href="/admin/orders_list" th:text="#{page.listOfOrders}"></a></li>
-<!--            <li><a href="/admin/bill_confirm">Отправить счет</a></li>-->
             <li><a href="/admin/statistics" th:text="#{page.statistics}"></a></li>
             <li><a href="/admin/update_ingredients" th:text="#{page.updateIngredients}"></a></li>
         </ul>
@@ -42,7 +41,6 @@
 <div class="container">
     <section class="cart">
         <div class="row cart_item">
-            <div class="col-1" th:text="#{field.id}"></div>
             <div class="col-4">
                 <div class="customer" th:text="#{field.order}"></div>
             </div>
@@ -54,7 +52,6 @@
                 <div class="status" th:text="#{field.status}"></div>
             </div>
             <div class="col-2">
-
             </div>
         </div>
     </section>
@@ -62,9 +59,10 @@
 <div class="container">
     <section class="cart">
             <div class="row cart_item" th:each="item : ${items}">
-                <div class="col-1" th:text="${item.getId()}"></div>
-                <div class="col-4">
-                    <div class="customer" th:text="${item.getDishes()}"></div>
+                <div class="col-4 in_column">
+                    <div th:each="dish : ${item.getDishes()}">
+                        <div class="customer" th:text="${dish.getName()}"></div>
+                    </div>
                 </div>
                 <div class="col-2 info">
                     <div class="title" th:text="${item.getPrice()}">
@@ -74,22 +72,34 @@
                     <div class="status" th:text="${item.getStatus()}"></div>
                 </div>
                 <div class="col-2">
-                    <a type="button" class="btn btn-danger" th:href="@{'?id=' + ${item.getId()}}" th:text="#{button.confirm}"></a>
+                    <form th:action="'/admin/confirm'+${item.getId()}" method="post">
+                        <button type="submit" class="btn btn-danger" th:text="#{button.confirm}"></button>
+                    </form>
                 </div>
             </div>
     </section>
 </div>
 <footer>
     <div class="container">
-        <div class="row">
-            <div class="col-4" th:text="#{footer.name}">
-
+        <div class="row footer_info">
+            <div class="col-4 footer-col logo" th:text="#{header.restaurant}">
             </div>
-            <div class="col-4 date">
-                15.03.2020
+            <div class="col-4 footer-col contacts">
+                <div class="title" th:text="#{footer.contacts}"></div>
+                <a href="tel:+380935947785" class="phone">+38 093 594 77 85</a>
+                <a href="mailto:kelels2015@gmail.com" class="email">kelels2015@gmail.com</a>
+                <a href="https://github.com/kelelas">github.com/kelelas</a>
             </div>
-            <div class="col-4 version" th:text="#{footer.version}">
-
+            <div class="col-4 footer-col">
+                <div class="title" th:text="#{footer.version}">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row copyright">
+            <div class="col-12">
+                Made by Osypchuk Vladyslav
             </div>
         </div>
     </div>

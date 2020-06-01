@@ -32,22 +32,17 @@
     <div class="container">
         <ul>
             <li><a href="/admin/orders_list" th:text="#{page.listOfOrders}"></a></li>
-            <!--            <li><a href="/admin/bill_confirm">Отправить счет</a></li>-->
             <li><a href="/admin/statistics" th:text="#{page.statistics}"></a></li>
             <li><a href="/admin/update_ingredients" th:text="#{page.updateIngredients}"></a></li>
         </ul>
     </div>
 </nav>
 <h1 th:text="#{text.history}"></h1>
-<form method="post" action="/admin/filter">
-    <input type="text" name="filter" id="filter" th:value="${filterValue}">
-    <input type="submit" value="FilterByUserId">
-</form>
 <div class="container">
     <section class="cart">
         <div class="row cart_item" >
-            <div class="col-1" th:text="#{field.id}"></div>
-            <div class="col-1" th:text="#{field.userId}"></div>
+
+            <div class="col-1" th:text="#{field.name}"></div>
             <div class="col-4">
                 <div class="customer" th:text="#{field.order}"></div>
             </div>
@@ -69,11 +64,12 @@
 </div>
 <div class="container">
     <section class="cart">
-        <div class="row cart_item" th:each="item : ${items}">
-            <div class="col-1" th:text="${item.getId()}"></div>
-            <div class="col-1" th:text="${item.getUserid()}"></div>
-            <div class="col-4">
-                <div class="customer" th:text="${item.getDishes()}"></div>
+        <div class="row cart_item" th:each="item : ${items.content}">
+            <div class="col-1" th:text="${item.getUserName()}"></div>
+            <div class="col-4 in_column">
+                <div th:each="dish : ${item.getDishes()}">
+                    <div class="customer" th:text="${dish.getName()}"></div>
+                </div>
             </div>
             <div class="col-1 info">
                 <div class="title" th:text="${item.getPrice()}">
@@ -91,17 +87,57 @@
 
     </section>
 </div>
+<nav class="pagination">
+    <ul>
+        <th:block th:if="${items.hasPrevious()}">
+            <li class="page-item"><a class="page-link"  th:href="@{'?page=' + ${items.getNumber()-1}}">Previous</a>
+            </li>
+        </th:block>
+        <th:block th:each="n : ${#numbers.sequence(0, items.getTotalPages() - 1)}">
+            <th:block  th:if="${items.getNumber() == n}">
+                <li class="page-item active">
+                    <a  class="page-link">
+                        [[${n+1}]]<span class="sr-only">(current)</span>
+                    </a>
+                </li>
+            </th:block>
+            <th:block th:unless="${items.getNumber() == n}" >
+                <li class="page-item" >
+                    <a class="page-link" th:href="@{'?page=' + ${n}}">
+                        [[${n+1}]]
+                    </a>
+                </li>
+            </th:block>
+        </th:block>
+        <th:block th:if="${items.hasNext()}" >
+            <li class="page-item"><a class="page-link"
+                                     th:href="@{'?page=' + ${items.getNumber()+1}}"
+            >Next</a>
+            </li>
+        </th:block>
+    </ul>
+</nav>
 <footer>
     <div class="container">
-        <div class="row">
-            <div class="col-4" th:text="#{footer.name}">
-
+        <div class="row footer_info">
+            <div class="col-4 footer-col logo" th:text="#{header.restaurant}">
             </div>
-            <div class="col-4 date">
-                15.03.2020
+            <div class="col-4 footer-col contacts">
+                <div class="title" th:text="#{footer.contacts}"></div>
+                <a href="tel:+380935947785" class="phone">+38 093 594 77 85</a>
+                <a href="mailto:kelels2015@gmail.com" class="email">kelels2015@gmail.com</a>
+                <a href="https://github.com/kelelas">github.com/kelelas</a>
             </div>
-            <div class="col-4 version" th:text="#{footer.version}">
-
+            <div class="col-4 footer-col">
+                <div class="title" th:text="#{footer.version}">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row copyright">
+            <div class="col-12">
+                Made by Osypchuk Vladyslav
             </div>
         </div>
     </div>

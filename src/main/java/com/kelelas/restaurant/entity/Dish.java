@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Builder
@@ -23,14 +25,19 @@ public class Dish implements Serializable {
     private Long id;
     @Column(name = "image", nullable = false)
     private String image;
-    @Column(nullable = false)
-    private String name_eng;
+    @Column(name = "name_eng", nullable = false)
+    private String nameEng;
     @Column(name = "name_ukr", nullable = false)
-    private String name_ukr;
-    @Column(name = "main_ingredient_id", nullable = false)
-    private Long main_ingredient_id;
-    @Column(name = "off_ingredient_id", nullable = false)
-    private Long off_ingredient_id;
+    private String nameUkr;
     @Column(name = "price", nullable = false)
     private int price;
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "dishes_ingredients",
+            joinColumns = {
+                    @JoinColumn(name = "dishes_id", referencedColumnName = "id",
+                            nullable = false, updatable = false)},
+            inverseJoinColumns = {
+                    @JoinColumn(name = "ingredients_id", referencedColumnName = "id",
+                            nullable = false, updatable = false)})
+    private List<Ingredient> ingredients = new ArrayList<>();
 }

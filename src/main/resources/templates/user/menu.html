@@ -22,8 +22,9 @@
             </div>
             <div class="col-4 logout">
                 <div>
-                    <div class="name" th:text="${name}"></div>
+                    <div class="name" th:text="${user.getNameEng()}"></div>
                     <button type="button" class="btn btn-outline-secondary" onclick="location.href='/logout'" th:text="#{button.logout}"></button>
+                    <div class="name" th:text="#{header.balance} +' '+ ${user.getBalance()} + #{header.currency}"></div>
                 </div>
             </div>
         </div>
@@ -49,10 +50,16 @@
                             <img th:src="${dish.getImage()}" class="card-img-top" alt="">
                         <div class="card-body">
                             <h5 class="card-title" th:text="${dish.getName()}"></h5>
-<!--                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>-->
-                            <p class="card-text" th:text="#{text.mainIngredient} + ' ' + ${dish.getMain_ingredient()} + ' ' + #{text.offIngredient} + ' ' + ${dish.getOff_ingredient()}"></p>
-                            <span class="price" th:text="${dish.getPrice()}"></span>
-                            <a th:href="@{'?id=' + ${dish.getId()}}" class="btn btn-primary" th:text="#{button.basket}"></a>
+                            <div th:each="ingredient : ${dish.getIngredients()}">
+                            <p class="card-text" th:text="${ingredient.getName()}"></p>
+                            </div>
+                            <div class="wrapper">
+                                <span class="price" th:text="${dish.getPrice()}"></span>
+                                <form th:action="'/user/addToOrder'+${dish.getId()}" method="post" >
+                                    <input type="submit" class="btn btn-primary" th:value="#{button.basket}">
+                                </form>
+                            </div>
+
                         </div>
 
                     </div>
@@ -64,15 +71,25 @@
 </section>
 <footer>
     <div class="container">
-        <div class="row">
-            <div class="col-4" th:text="#{footer.name}">
-
+        <div class="row footer_info">
+            <div class="col-4 footer-col logo" th:text="#{header.restaurant}">
             </div>
-            <div class="col-4 date">
-                15.03.2020
+            <div class="col-4 footer-col contacts">
+                <div class="title" th:text="#{footer.contacts}"></div>
+                <a href="tel:+380935947785" class="phone">+38 093 594 77 85</a>
+                <a href="mailto:kelels2015@gmail.com" class="email">kelels2015@gmail.com</a>
+                <a href="https://github.com/kelelas">github.com/kelelas</a>
             </div>
-            <div class="col-4 version" th:text="#{footer.version}">
-
+            <div class="col-4 footer-col version">
+                <div class="title" th:text="#{footer.version}">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row copyright">
+            <div class="col-12">
+                Made by Osypchuk Vladyslav
             </div>
         </div>
     </div>

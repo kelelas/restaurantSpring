@@ -48,10 +48,10 @@
 </div>
 <section class="login">
     <form th:action="@{/registration}" method="post">
-        <label for="name_ukr" th:text="#{registration.name_ukr}"></label>
-        <input type="text" name="name_ukr" id="name_ukr" placeholder="Іван">
-        <label for="name_eng" th:text="#{registration.name_eng}"></label>
-        <input type="text" name="name_eng" id="name_eng" placeholder="Ivan">
+        <label for="nameUkr" th:text="#{registration.name_ukr}"></label>
+        <input type="text" name="nameUkr" id="nameUkr" placeholder="Іван">
+        <label for="nameEng" th:text="#{registration.name_eng}"></label>
+        <input type="text" name="nameEng" id="nameEng" placeholder="Ivan">
         <label for="email" th:text="#{registration.email}"></label>
         <input type="email" name="email" id="email" placeholder="ivanov@gmail.com">
         <label for="password" th:text="#{registration.password}"></label>
@@ -61,15 +61,25 @@
 </section>
 <footer>
     <div class="container">
-        <div class="row">
-            <div class="col-4" th:text="#{footer.name}">
-
+        <div class="row footer_info">
+            <div class="col-4 footer-col logo" th:text="#{header.restaurant}">
             </div>
-            <div class="col-4 date">
-                15.03.2020
+            <div class="col-4 footer-col contacts">
+                <div class="title" th:text="#{footer.contacts}"></div>
+                <a href="tel:+380935947785" class="phone">+38 093 594 77 85</a>
+                <a href="mailto:kelels2015@gmail.com" class="email">kelels2015@gmail.com</a>
+                <a href="https://github.com/kelelas">github.com/kelelas</a>
             </div>
-            <div class="col-4 version" th:text="#{footer.version}">
-
+            <div class="col-4 footer-col">
+                <div class="title" th:text="#{footer.version}">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row copyright">
+            <div class="col-12">
+                Made by Osypchuk Vladyslav
             </div>
         </div>
     </div>

@@ -3,6 +3,8 @@ package com.kelelas.restaurant.dto;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -10,12 +12,11 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 @ToString
-public class StoryDTO {
+public class BillDTO {
     private Long id;
     private LocalDateTime date;
     private int price;
-    private Long userid;
-    private String dishes;
     private String status;
-
+    private String userName;
+    private List<DishDTO> dishes = new ArrayList<>();
 }

@@ -20,7 +20,7 @@ public class Status {
     @Column(name = "id", nullable = false)
     private Long id;
     @Column(name = "status_eng", nullable = false)
-    private String status_eng;
+    private String statusEng;
     @Column(name = "status_ukr", nullable = false)
-    private String status_ukr;
+    private String statusUkr;
 }

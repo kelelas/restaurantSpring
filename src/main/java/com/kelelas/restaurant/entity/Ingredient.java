@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Builder
@@ -13,19 +15,20 @@ import javax.persistence.*;
 @AllArgsConstructor
 
 @Entity
-@Table( name="ingredient",
+@Table( name="ingredients",
         uniqueConstraints={@UniqueConstraint(columnNames={"name_eng"})})
 public class Ingredient {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
     private Long id;
-    @Column(nullable = false)
-    private String name_eng;
+    @Column(name = "name_eng",nullable = false)
+    private String nameEng;
     @Column(name = "name_ukr", nullable = false)
-    private String name_ukr;
+    private String nameUkr;
     @Column(name = "amount", nullable = false)
     private int amount;
     @Column(name = "max_amount", nullable = false)
-    private int max_amount;
+    private int maxAmount;
+
 }

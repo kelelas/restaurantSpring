@@ -1,7 +1,7 @@
 package com.kelelas.restaurant.service;
 
-import com.kelelas.restaurant.dto.UsersDTO;
 import com.kelelas.restaurant.entity.User;
+import com.kelelas.restaurant.exception.DBException;
 import com.kelelas.restaurant.repository.UserRepository;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
@@ -26,20 +26,12 @@ public class UserService implements UserDetailsService {
     public UserDetails loadUserByUsername(@NonNull String email) throws UsernameNotFoundException {
         return userRepository.findUserByEmail(email).orElseThrow(() -> new UsernameNotFoundException("user with email " + email + " not found!"));
     }
-    public UsersDTO getAllUsers() {
-        return new UsersDTO(userRepository.findAll());
-    }
+
     public void save(User user){
         try {
             userRepository.save(user);
         }catch (Exception e){
-            System.out.println(user);
+            throw new DBException(e);
         }
-
-
-
-    }
-    public User findUserById(Long id){
-        return userRepository.findById(id).get();
     }
 }

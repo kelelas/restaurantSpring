@@ -4,6 +4,8 @@ import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -16,9 +18,5 @@ public class DishDTO {
         private String name;
         private int price;
         private String image;
-        private String main_ingredient;
-        private String off_ingredient;
-        private Long main_ingredient_id;
-        private Long off_ingredient_id;
-
+        List<IngredientDTO> ingredients = new ArrayList<>();
 }
