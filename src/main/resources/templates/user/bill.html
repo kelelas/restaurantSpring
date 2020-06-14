@@ -21,9 +21,18 @@
             </div>
             <div class="col-4 logout">
                 <div>
-                    <div class="name" th:text="${user.getNameEng()}"></div>
-                    <button type="button" class="btn btn-outline-secondary" onclick="location.href='/logout'" th:text="#{button.logout}"></button>
-                    <div class="name" th:text="#{header.balance} +' '+ ${user.getBalance()} + #{header.currency}"></div>
+                    <th:block  th:if="${#locale.toString() == 'ua'}">
+                        <div class="name" th:text="${user.getNameUkr()}"></div>
+                        <button type="button" class="btn btn-outline-secondary" onclick="location.href='/logout'" th:text="#{button.logout}"></button>
+
+                        <div class="name" th:text="#{header.balance} +' '+ ${user.getBalance()} + #{header.currency}"></div>
+                    </th:block>
+                    <th:block th:unless="${#locale.toString() == 'ua'}" >
+                        <div class="name" th:text="${user.getNameEng()}"></div>
+                        <button type="button" class="btn btn-outline-secondary" onclick="location.href='/logout'" th:text="#{button.logout}"></button>
+
+                        <div class="name" th:text="#{header.balance} +' '+ ${user.getBalance()/8} + #{header.currency}"></div>
+                    </th:block>
                 </div>
             </div>
         </div>
@@ -95,7 +104,7 @@
                 <a href="mailto:kelels2015@gmail.com" class="email">kelels2015@gmail.com</a>
                 <a href="https://github.com/kelelas">github.com/kelelas</a>
             </div>
-            <div class="col-4 footer-col">
+            <div class="col-4 footer-col version">
                 <div class="title" th:text="#{footer.version}">
                 </div>
             </div>

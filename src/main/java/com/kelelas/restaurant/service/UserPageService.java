@@ -84,7 +84,7 @@ public class UserPageService {
 
     public int sum() {
         sum = ConstantBundle.getIntProperty("number.defaultNumber");
-        localDishes().forEach((d)-> sum+=d.getPrice());
+        dishes().forEach((d)-> sum+=d.getPrice());
         return sum;
     }
 

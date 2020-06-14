@@ -12,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @ToString
-public class BillDTO {
+public class HistoryDTO {
     private Long id;
     private String date;
     private int price;

@@ -16,7 +16,7 @@ public class LocaleDishMapper extends LocalizedMapper<Dish, DishDTO> {
                 .id(entity.getId())
                 .image(entity.getImage())
                 .name(entity.getNameEng())
-                .price(entity.getPrice())
+                .price(entity.getPrice()/8)
                 .ingredients(new ArrayList<>())
                 .build();
         for (Ingredient ingredient : entity.getIngredients()){

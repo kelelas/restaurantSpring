@@ -22,9 +22,18 @@
             </div>
             <div class="col-4 logout">
                 <div>
-                    <div class="name" th:text="${user.getNameEng()}"></div>
-                    <button type="button" class="btn btn-outline-secondary" onclick="location.href='/logout'" th:text="#{button.logout}"></button>
-                    <div class="name" th:text="#{header.balance} +' '+ ${user.getBalance()} + #{header.currency}"></div>
+                    <th:block  th:if="${#locale.toString() == 'ua'}">
+                        <div class="name" th:text="${user.getNameUkr()}"></div>
+                        <button type="button" class="btn btn-outline-secondary" onclick="location.href='/logout'" th:text="#{button.logout}"></button>
+
+                        <div class="name" th:text="#{header.balance} +' '+ ${user.getBalance()} + #{header.currency}"></div>
+                    </th:block>
+                    <th:block th:unless="${#locale.toString() == 'ua'}" >
+                        <div class="name" th:text="${user.getNameEng()}"></div>
+                        <button type="button" class="btn btn-outline-secondary" onclick="location.href='/logout'" th:text="#{button.logout}"></button>
+
+                        <div class="name" th:text="#{header.balance} +' '+ ${user.getBalance()/8} + #{header.currency}"></div>
+                    </th:block>
                 </div>
             </div>
         </div>
@@ -54,7 +63,7 @@
                             <p class="card-text" th:text="${ingredient.getName()}"></p>
                             </div>
                             <div class="wrapper">
-                                <span class="price" th:text="${dish.getPrice()}"></span>
+                                <span class="price" th:text="${dish.getPrice()} + #{header.currency}"></span>
                                 <form th:action="'/user/addToOrder'+${dish.getId()}" method="post" >
                                     <input type="submit" class="btn btn-primary" th:value="#{button.basket}">
                                 </form>

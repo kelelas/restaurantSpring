@@ -13,7 +13,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table( name="cart")
+@Table( name="cart", uniqueConstraints = {@UniqueConstraint( columnNames = {"users_id", "dishes_id"})})
 public class Cart implements Serializable {
     @Id
     @GeneratedValue

@@ -6,6 +6,7 @@ import com.kelelas.restaurant.entity.Dish;
 import com.kelelas.restaurant.entity.History;
 import org.springframework.stereotype.Component;
 
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 @Component
@@ -13,9 +14,9 @@ public class LocaleHistoryMapper extends LocalizedMapper<History, HistoryDTO> {
     @Override
     protected HistoryDTO toEngDto(History entity) {
         HistoryDTO historyDTO = HistoryDTO.builder()
-                .date(entity.getDate())
+                .date(entity.getDate().format(DateTimeFormatter.ofPattern("MM.dd.yyyy HH:mm:ss")))
                 .id(entity.getId())
-                .price(entity.getPrice())
+                .price(entity.getPrice()/8)
                 .status(entity.getStatus().getStatusEng())
                 .userName(entity.getUser().getNameEng())
                 .dishes(new ArrayList<>())
@@ -35,7 +36,7 @@ public class LocaleHistoryMapper extends LocalizedMapper<History, HistoryDTO> {
     @Override
     protected HistoryDTO toUkrDto(History entity) {
         HistoryDTO historyDTO = HistoryDTO.builder()
-                .date(entity.getDate())
+                .date(entity.getDate().format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss")))
                 .id(entity.getId())
                 .price(entity.getPrice())
                 .status(entity.getStatus().getStatusUkr())
